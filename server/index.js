@@ -143,7 +143,7 @@ app.post('/api/users', (req, res) => {
   .then((user) => {
     console.log('\tSAVE SUCCESS\n user=', user.attributes);
     let userAccObj = userParser.getUser(user.attributes);
-    if (user.attributes.dateOfBirth !== undefined) {
+    if (user.attributes['date_of_birth']) {
       braintree.createOrUpdateMerchantAccount(user.attributes, user, res);
     } else {
       res.status(201).send(user);
