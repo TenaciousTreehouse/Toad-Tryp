@@ -23,8 +23,6 @@ class Trip extends React.Component {
   }
 
   componentDidMount() {
-    console.log('//////////', this.state.trips);
-    console.log('//////////', this.currentUser);
     this.fetch(this.match.params.tripId);
   }
 
