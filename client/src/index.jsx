@@ -10,7 +10,7 @@ import MyRoutes from './components/Navigation/MyRoutes.jsx';
 import authHelper from '../../lib/AuhenticationHelper.js';
 import io from 'socket.io-client';
 
-import AlertPing from './Components/Trips/AlertPing.jsx';
+import AlertPing from './components/Trips/AlertPing.jsx';
 import axios from 'axios';
 import {Redirect} from 'react-router-dom';
 
