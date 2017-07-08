@@ -1,5 +1,6 @@
 import React from 'react';
 import { Form, Input, Segment, Header, Button } from 'semantic-ui-react';
+import {Redirect} from 'react-router-dom';
 import UserInfo from './UserInfo.jsx';
 import DriverInfo from './DriverInfo.jsx';
 import BecomeADriver from './BecomeADriver.jsx';
@@ -14,6 +15,7 @@ class Profile extends React.Component {
       preventEdits: true,
       showDriverInfo: false,
       disableDriverToggle: false,
+      redirectTo: null,
       user: {
         username: props.match.params.username
       } 
@@ -36,6 +38,7 @@ class Profile extends React.Component {
     .then( res => {
       this.setState({preventEdits: true});
       this.props.setUserObject(res.data);
+      this.setState({redirectTo: true});
     })
     .catch( err => {
       console.log('Error creating a user ', err);
@@ -118,6 +121,7 @@ class Profile extends React.Component {
               })()}
             </Segment.Group>
           </Form>
+          {this.state.redirectTo && <Redirect to="/"/>}
         </div>
       );
     } else {
