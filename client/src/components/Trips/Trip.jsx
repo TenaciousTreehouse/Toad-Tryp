@@ -20,16 +20,10 @@ class Trip extends React.Component {
         rider: {}
       }
     }
-    this.handleRequestTrip.bind(this);
   }
 
   componentDidMount() {
     this.fetch(this.match.params.tripId);
-  }
-
-  handleRequestTrip(e) {
-    e.preventDefault();
-    this.postTripRequest(this.state.trips.id, this.currentUser.id)
   }
 
   fetch(tripId) {
@@ -157,17 +151,28 @@ class Trip extends React.Component {
           <Grid.Row>
             <Container textAlign='center'>
               {
-                this.state.trips.driver.first_name ? 
-                <CCForm 
-                  postTripRequest={this.postTripRequest.bind(this)}
-                  trips={this.state.trips}
-                  currentUser={this.currentUser}
-                /> :
-                <span></span>
+                this.state.trips.driver.first_name 
+                ?  [ (this.state.trips.driver.username !== this.currentUser.username)
+                    ? <CCForm 
+                      postTripRequest={this.postTripRequest.bind(this)}
+                      trips={this.state.trips}
+                      currentUser={this.currentUser}
+                      />
+                    : undefined
+                ]
+                : <span></span>
+              }
+              {
+                (this.state.trips.driver.username !== this.currentUser.username)
+                ? <Button id='checkoutBtn' color='green'>Request to Book</Button>
+                : <span id='disclaimer'>This is your trip</span>
+              }
+              {
+                (this.state.trips.driver.username !== this.currentUser.username)
+                ? <span id='disclaimer'>You won't be charged until your Driver accepts your reservation.</span>
+                : <span></span>
               }
               
-              <Button id='checkoutBtn' color='green'>Request to Book</Button>
-              <span id='disclaimer'>You won't be charged until your Driver accepts your reservation.</span>
             </Container>
           </Grid.Row>
         </Grid>
