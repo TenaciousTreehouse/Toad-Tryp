@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, CheckBox, Form, Input, Segment, Header, Select, Container} from 'semantic-ui-react';
+import {Button, CheckBox, Form, Input, Segment, Header, Select, Container, Message} from 'semantic-ui-react';
 import {Redirect} from 'react-router-dom';
 import axios from 'axios';
 import $ from 'jquery';
@@ -13,18 +13,12 @@ class NewTrip extends React.Component {
     super(props);
     this.state = {
       formComplete: false,
+      formError: false,
       trip: {driver_id: props.currentUser.id || 1}
     };
-    console.log(this);
     this.handleCancelClick = this.handleCancelClick.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    // this.handleChange = this.handleChange.bind(this);
   }
-
-  // handleChange(e, {name, value}) {
-  //   this.state.trip[[name]] = value;
-  //   this.setState({trip: this.state.trip});
-  // }
 
   handleCancelClick() {
     console.log('handleclick');
@@ -34,7 +28,7 @@ class NewTrip extends React.Component {
   handleSubmit(e) {
 
     var trip = {driver_id: this.props.currentUser.id || 1};
-    trip.departure_date = $('#departure_date').val();// departure_date
+    trip.departure_date = $('#departure_date').val();
     trip.departure_time = $('#departure_time').val();
     trip.departure_address_line1 = $('#dep_autocomplete').val();
     trip.departure_city = $('#locality').val();
@@ -42,7 +36,6 @@ class NewTrip extends React.Component {
     trip.departure_zip = $('#postal_code').val();
     trip.seats = $('#seats')[0].innerText;
     trip.price = $('#price').val();
-
     trip.arrival_address_line1 = $('#arrival_autocomplete').val();
     trip.arrival_city = $('#arrival_locality').val();
     trip.arrival_state = $('#arrival_administrative_area_level_1').val();
@@ -53,7 +46,8 @@ class NewTrip extends React.Component {
         this.setState({formComplete: true});
       })
       .catch( err => {
-        console.log('Error creating a trip ', err);
+        console.log(err);
+        this.setState({formError: err});
       });
   }
 
@@ -73,6 +67,13 @@ class NewTrip extends React.Component {
               <Segment padded="very" style={bgStyle}>
                 <Header as='h2' id='main-header2' color='green'>New Trip</Header>
                 <Segment.Group>
+                  {this.state.formError ? 
+                    <Message negative>
+                      <Message.Header>Whoops! Looks like something went wrong..</Message.Header>
+                      <p>Please make sure all the fields are filled in and try again.</p>
+                    </Message>
+                    : <div></div>
+                  }
                   <Segment>
                     <AutoCompleteForm disable handleSubmit={this.handleSubmit}/>
                   </Segment>

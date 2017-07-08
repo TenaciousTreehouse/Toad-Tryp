@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Segment, Header, Button } from 'semantic-ui-react';
+import { Form, Input, Segment, Header, Button, Message } from 'semantic-ui-react';
 import {Redirect} from 'react-router-dom';
 import UserInfo from './UserInfo.jsx';
 import DriverInfo from './DriverInfo.jsx';
@@ -14,6 +14,7 @@ class Profile extends React.Component {
     this.state = { 
       preventEdits: true,
       showDriverInfo: false,
+      formError: false,
       disableDriverToggle: false,
       redirectTo: null,
       user: {
@@ -42,6 +43,9 @@ class Profile extends React.Component {
     })
     .catch( err => {
       console.log('Error creating a user ', err);
+      this.setState({
+        formError: true
+      });
     });
   }
 
@@ -112,6 +116,13 @@ class Profile extends React.Component {
                 if (!preventEdits) {
                   return (
                     <Segment textAlign="right">
+                      {this.state.formError ? 
+                        <Message negative>
+                          <Message.Header>Whoops! Looks like something went wrong..</Message.Header>
+                          <p>Please make sure all the fields are filled in and try again.</p>
+                        </Message>
+                        : <div></div>
+                      }
                       <Button color="grey" onClick={this.handleCancelClick.bind(this)}> Cancel </Button>
                       <Button color="green" onClick={this.handleSubmit.bind(this)}> Submit </Button>
                     </Segment>
