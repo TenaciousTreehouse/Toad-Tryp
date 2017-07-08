@@ -13,7 +13,7 @@ class NewTrip extends React.Component {
     super(props);
     this.state = {
       formComplete: false,
-      formError: null,
+      formError: false,
       trip: {driver_id: props.currentUser.id || 1}
     };
     this.handleCancelClick = this.handleCancelClick.bind(this);
