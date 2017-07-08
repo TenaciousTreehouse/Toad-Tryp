@@ -164,7 +164,7 @@ app.get('/api/trips', (req, res) => {
   const search = {};
   if (req.query.depart) search.departure_city = req.query.depart;
   if (req.query.arrive) search.arrival_city = req.query.arrive;
-  if (req.query.departdate) search.departure_date = req.query.departdate
+  // if (req.query.departdate) search.departure_date = req.query.departdate
   models.Trip.where(search)
   .fetchAll({withRelated: ['driver','riders']})
   .then((trips) => {
