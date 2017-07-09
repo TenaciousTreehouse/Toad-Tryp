@@ -309,7 +309,7 @@ app.post('/api/trips/:tripId/deletemessage', (req, res) => {
       } else {
         throw error;
       }
-      })
+    })
     .catch(error => {
       throw error;
     });
