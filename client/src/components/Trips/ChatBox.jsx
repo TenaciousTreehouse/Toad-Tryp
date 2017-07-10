@@ -14,10 +14,7 @@ class ChatBox extends React.Component {
       messages: [],
       chatBoxField: '',
       isTyping: false,
-      otherIsTyping: {
-        username: '',
-        isTyping: false
-      },
+      otherIsTyping: {},
     }
     this.updateChatBoxField = this.updateChatBoxField.bind(this);
     this.handleDeleteMessage = this.handleDeleteMessage.bind(this);
@@ -53,7 +50,8 @@ class ChatBox extends React.Component {
     });
 
     this.socket.emit('isTyping', { 
-      username: this.props.userData.username,
+      firstName: this.props.userData.first_name,
+      img_url: this.props.userData.img_url,
       isTyping: !!event.target.value,
       trip: this.props.tripId
     });
@@ -70,7 +68,7 @@ class ChatBox extends React.Component {
     this.updateChatBoxField({target: {value: ''}});
 
     if (!!this.state.chatBoxField) {
-      axios.post(`/api/trips/${tripId}/sendmessage`, { userId: userId, username_from: username, message: this.state.chatBoxField, timestamp: timestamp})
+      axios.post(`/api/trips/${tripId}/sendmessage`, { userId: userId, message: this.state.chatBoxField, timestamp: timestamp})
         .catch(error => {
           console.log('Caught error sending message', error)
         });
@@ -84,7 +82,7 @@ class ChatBox extends React.Component {
 
   handlePingUser(messageData) {
     this.socket.emit('pingUser', {
-      username_from: this.props.userData.username,
+      first_name_from: this.props.userData.first_name,
       user_id_from: this.props.userData.id,
       user_id_to: messageData.user_id_from,
       trip_id: messageData.trip_id
@@ -103,7 +101,7 @@ class ChatBox extends React.Component {
     // NEED TO SET A TEXT LIMIT ON SENDING MESSAGE
     var typingIndiciator;
     if (otherIsTyping.isTyping) {
-      typingIndiciator = <TypingIndicator username={otherIsTyping.username}/>
+      typingIndiciator = <TypingIndicator otherIsTyping={otherIsTyping}/>
     }
 
     return (
@@ -155,5 +153,3 @@ class ChatBox extends React.Component {
 }
 
 export default ChatBox;
-
- // <Button color="blue" onClick={handleSendMessage}>Send</Button>

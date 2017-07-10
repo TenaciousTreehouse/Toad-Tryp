@@ -75,7 +75,6 @@ CREATE TABLE IF NOT EXISTS trips_toads (
 CREATE TABLE IF NOT EXISTS messages (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   user_id_from INT NOT NULL,
-  username_from VARCHAR(100) NOT NULL,
   trip_id INT NOT NULL,
   message VARCHAR(1024),
   time_stamp DATETIME,
@@ -231,6 +230,7 @@ INSERT INTO trips (
   INSERT INTO trips_toads (trip_id, user_id) VALUES ((SELECT id FROM trips WHERE departure_address_line1 = '351 King St'), (SELECT id FROM users WHERE first_name = 'Dylan'));
   INSERT INTO trips_toads (trip_id, user_id) VALUES ((SELECT id FROM trips WHERE departure_address_line1 = '728 E 4th St'), (SELECT id FROM users WHERE first_name = 'Kirk'));
 
-INSERT INTO messages (user_id_from, username_from, trip_id, message, time_stamp) VALUES (1, 'jun123', 3, 'this message should show', '2017-07-04 01:02:03');
-INSERT INTO messages (user_id_from, username_from, trip_id, message, time_stamp) VALUES (1, 'jun123', 3, 'YO, GIMMIE A RIDE', '2017-07-05 01:02:03');
-INSERT INTO messages (user_id_from, username_from, trip_id, message, time_stamp) VALUES (1, 'jun123', 1, '..uh are you still there?', '2016-07-25 01:02:03');
+INSERT INTO messages (user_id_from, trip_id, message, time_stamp) VALUES (1, 3, 'this looks like a fun trip!', '2017-06-04 01:02:03');
+INSERT INTO messages (user_id_from, trip_id, message, time_stamp) VALUES (1, 3, 'do you allow dogs in your car?', '2017-06-05 01:02:03');
+INSERT INTO messages (user_id_from, trip_id, message, time_stamp) VALUES (2, 1, 'how many luggages can I bring?', '2016-06-25 01:02:03');
+INSERT INTO messages (user_id_from, trip_id, message, time_stamp) VALUES (2, 1, 'do you make frequent bathroom stops?', '2016-06-26 01:02:03');

@@ -4,12 +4,12 @@ import { Modal, Button } from 'semantic-ui-react';
 const AlertPing = (props) => (
   <Modal size='small' open={true}>
     <Modal.Header>
-      You've been pinged to join {props.pingedData.username_from}!
+      You've been pinged to join {props.pingedData.first_name_from}!
     </Modal.Header>
     <Modal.Actions>
       <Button color='grey' content='Ignore' onClick={props.dismissPing} />
-      <Button color='green' 
-              content={`Join`} 
+      <Button color='green'
+              content='Join'
               icon='chevron right' 
               labelPosition='right' 
               onClick={() => props.redirectFromPing(props.pingedData.trip_id)} 
