@@ -42,6 +42,7 @@ class SearchResults extends React.Component {
       <Header as='h2' id='main-header2'>Showing trips <span className="green-text">{fromHeader}</span> <span className="green-text">{toHeader}</span> </Header>
       <Search />
       <Container className="search-results">
+        
         { (() => {
             if (location.state.trips) {
               {
@@ -70,6 +71,7 @@ class SearchResults extends React.Component {
             pathname: this.state.redirectTo,
             state: {location, match}
           }} />}
+        
       </Container>
     </Container>);
   }
