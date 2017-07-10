@@ -251,6 +251,19 @@ app.get('/api/trips/:tripId/getmessages', (req, res) => {
     .then(trip => {
       if (trip) {
         console.log('\tSUCCESS\n');
+        var extraMessagesDetails = []
+
+        // console.log('trip messages', trip.toJSON());
+        trip.toJSON().forEach(message => {
+          models.User.forge({ id: message.user_id_from }).fetch()
+            .then(user => {
+              message.img_url = user.toJSON().img_url
+              extraMessagesDetails.push(message);
+              // console.log(extraMessagesDetails);
+            });
+        })
+
+        console.log(trip.toJSON());
         res.status(200).send(trip.toJSON());
       } else {
         throw trip;

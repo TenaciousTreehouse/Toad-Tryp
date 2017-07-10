@@ -113,7 +113,7 @@ class App extends React.Component {
           <NavBar isAuthenticated={this.isUserAuthenticated.bind(this)} username={this.state.user.username} authenticateUserFunc={this.authenticateUser.bind(this)} />
           <MyRoutes isAuthenticated={this.isUserAuthenticated.bind(this)} authenticateUserFunc={this.authenticateUser.bind(this)} currentUser={currentUser} setUserObject={this.setUserObject.bind(this)} />
 
-          {this.state.redirectTo && <Redirect push to={{
+          {<Redirect push to={{
             pathname: this.state.redirectTo
           }} />}
         </div>
