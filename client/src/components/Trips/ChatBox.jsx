@@ -113,7 +113,7 @@ class ChatBox extends React.Component {
             Trip Forum
           </Card.Header>
         </Card.Content>
-        <Card.Content>
+        <Card.Content className='messagebox'>
           <Comment.Group>
             {
               messages.map((messageData, index) => {

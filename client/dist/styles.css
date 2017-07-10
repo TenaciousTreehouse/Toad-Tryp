@@ -192,3 +192,10 @@ form {
   text-align:center;
   margin: 0 auto;
 }
+
+.messagebox {
+  height: 380px;
+  overflow: scroll;
+  display: flex;
+  flex-direction: column-reverse;
+}
