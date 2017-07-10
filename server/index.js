@@ -247,28 +247,16 @@ app.post('/api/trips/:tripId/join/:userId', (req, res) => {
 app.get('/api/trips/:tripId/getmessages', (req, res) => {
   const trip_id = req.params.tripId;
 
-  models.Message.query('where', 'trip_id', '=', trip_id).fetchAll()
+  models.Message.query('where', 'trip_id', '=', trip_id).fetchAll({withRelated: ['user']})
     .then(trip => {
       if (trip) {
         console.log('\tSUCCESS\n');
-        var extraMessagesDetails = []
-
-        // console.log('trip messages', trip.toJSON());
-        trip.toJSON().forEach(message => {
-          models.User.forge({ id: message.user_id_from }).fetch()
-            .then(user => {
-              message.img_url = user.toJSON().img_url
-              extraMessagesDetails.push(message);
-              // console.log(extraMessagesDetails);
-            });
-        })
-
         console.log(trip.toJSON());
         res.status(200).send(trip.toJSON());
       } else {
         throw trip;
       }
-    })
+    })  
     .catch(err => {
       const message = `\tUnable to find trip with id: ${id}`
       console.error(message);

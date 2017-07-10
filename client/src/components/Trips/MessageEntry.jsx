@@ -27,7 +27,7 @@ class MessageEntry extends React.Component {
       <Container textAlign={messageAlign}>
         <Comment>
           <Comment.Author>
-            {messageData.username_from}
+            {messageData.user.first_name}
             {ping}
           </Comment.Author>
           <Comment.Text>

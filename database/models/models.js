@@ -28,7 +28,10 @@ const TripToad = bookshelf.Model.extend({
 });
 
 const Message = bookshelf.Model.extend({
-  tableName: 'messages'
+  tableName: 'messages',
+  user: function() {
+    return this.belongsTo(User, 'user_id_from');
+  }
 })
 
 
