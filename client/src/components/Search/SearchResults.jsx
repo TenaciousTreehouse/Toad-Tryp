@@ -49,7 +49,7 @@ class SearchResults extends React.Component {
                   return (
                   <Table striped padded='very'>
                     <SearchResultTableHeader headers={tableHeaders} />
-                    {location.state.trips.map(trip => <SearchResultRow trip={trip} driverDetails={trip.driver} handleClick={this.handleClick}/> )}
+                    {location.state.trips.map((trip, i) => <SearchResultRow key={i} trip={trip} driverDetails={trip.driver} handleClick={this.handleClick}/> )}
                   </Table>);
                 } else {
                   return (

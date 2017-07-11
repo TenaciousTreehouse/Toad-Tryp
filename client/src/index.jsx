@@ -20,14 +20,15 @@ class App extends React.Component {
     this.state = {
       isAuthenticated: false,
       user: {
-        id: 5,
+        id: 4,
         username: 'NOTLOGGEDIN',
-        first_name: 'John-NOTLOGGEDIN',
+        first_name: 'Dylan-NOTLOGGEDIN',
         last_name: 'Doe-NOTLOGGEDIN',
-        password: '123'
+        password: '123',
+        img_url: 'https://lh3.google.com/u/0/d/0B7wkVNnd3usbMmp5QVdlcThGLWM=w2878-h1472-iv3'
       },
       pinged: false,
-      pingedData: null,
+      pingedData: {},
       redirectTo: null
     }
   }
@@ -66,10 +67,10 @@ class App extends React.Component {
     this.socket = io.connect('/');
     this.socket.on(`pingUser`, data => {
       if (data.user_id_to === this.state.user.id) {
-        console.log('someone is directly pinging you!', data)
         this.setState({
           pinged: true,
-          pingedData: data
+          pingedData: data,
+          redirectTo: null
         });
       }
     });
@@ -83,18 +84,22 @@ class App extends React.Component {
 
   redirectFromPing(trip_id) {
     this.dismissPing();
-    console.log('right path to redirect');
-    axios.get(`/api/trips/${trip_id}`)
-      .then((response) => {
-        console.log('Successfully fetching from db in Trip Component', response);
-        this.setState({
-          redirectTo: `/trip/${trip_id}`,
-          trips: response.data
-        });
-      })
-      .catch((error) => {
-        console.log('GET unsuccessful from the DB in Trip Component', error);
-      });
+
+    this.setState({
+      redirectTo: `/trip/${trip_id}`,
+    });
+    
+    // axios.get(`/api/trips/${trip_id}`)
+    //   .then((response) => {
+    //     console.log('Successfully fetching from db in Trip Component', response);
+    //     this.setState({
+    //       redirectTo: `/trip/${trip_id}`,
+    //       trips: response.data
+    //     });
+    //   })
+    //   .catch((error) => {
+    //     console.log('GET unsuccessful from the DB in Trip Component', error);
+    //   });
   }
 
   render() {

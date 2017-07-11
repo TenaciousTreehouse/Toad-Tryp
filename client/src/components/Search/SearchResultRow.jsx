@@ -4,7 +4,7 @@ import formatTime from '../utils/formatTime.js';
 import dateParser from '../utils/dateParser.js';
 
 const SearchResultRow = (props) => (
-  
+  <Table.Body>
   <Table.Row style={{cursor:'pointer'}} className="results-row"onClick={() => props.handleClick(props.trip.id)}>
     <Table.Cell>
     <Header as='h3' textAlign='left' color='green'>${props.trip.price}</Header>
@@ -15,7 +15,7 @@ const SearchResultRow = (props) => (
     <Table.Cell singleLine>{props.driverDetails.year} {props.driverDetails.make || 'No Vehicle Information'} {props.driverDetails.model}</Table.Cell>
     <Table.Cell singleLine>{props.trip.seats}</Table.Cell>   
   </Table.Row>
-  
+  </Table.Body>
 )
 
 export default SearchResultRow;

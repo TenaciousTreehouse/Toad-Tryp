@@ -40,7 +40,6 @@ class NavBar extends React.Component {
           position='top right'
           /> 
         </ul>
-
       </nav>
     </div>
     )

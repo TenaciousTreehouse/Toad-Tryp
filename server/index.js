@@ -247,7 +247,7 @@ app.post('/api/trips/:tripId/join/:userId', (req, res) => {
 app.get('/api/trips/:tripId/getmessages', (req, res) => {
   const trip_id = req.params.tripId;
 
-  models.Message.query('where', 'trip_id', '=', trip_id).fetchAll()
+  models.Message.query('where', 'trip_id', '=', trip_id).fetchAll({withRelated: ['user']})
     .then(trip => {
       if (trip) {
         console.log('\tSUCCESS\n');
@@ -255,7 +255,7 @@ app.get('/api/trips/:tripId/getmessages', (req, res) => {
       } else {
         throw trip;
       }
-    })
+    })  
     .catch(err => {
       const message = `\tUnable to find trip with id: ${id}`
       console.error(message);
@@ -276,7 +276,7 @@ app.post('/api/trips/:tripId/sendmessage', (req, res) => {
   const message = req.body.message;
   const time_stamp = req.body.timestamp;
   
-  models.Message.forge({ user_id_from, username_from, trip_id, message, time_stamp }).save()
+  models.Message.forge({ user_id_from, trip_id, message, time_stamp }).save()
     .then(response => {
       if (response) {
         console.log('\tSUCCESS\n');
@@ -291,7 +291,7 @@ app.post('/api/trips/:tripId/sendmessage', (req, res) => {
 
   io.emit('updateMessagesAlert');
   
-  // DO NOT DELETE, NEED TO REIMPLEMENT TWILIO
+  // USE THIS IF YOU PLAN ON IMPLEMENTING WITH TWILIO
   // client.messages.create({
   //   body: req.body.message,
   //   to: '7148640438',  // Text this number
@@ -309,7 +309,7 @@ app.post('/api/trips/:tripId/deletemessage', (req, res) => {
       } else {
         throw error;
       }
-      })
+    })
     .catch(error => {
       throw error;
     });
